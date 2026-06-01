@@ -2,15 +2,22 @@ using UnityEngine;
 
 public class Turnos : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public int jogadorAtual = 1;
+
+    public void TrocarTurno()
     {
-        
+        if (jogadorAtual == 1)
+        {
+            jogadorAtual = 2;
+        }
+        else
+        {
+            jogadorAtual = 1;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ReiniciarTurno()
     {
-        
+        jogadorAtual = 1;
     }
 }
