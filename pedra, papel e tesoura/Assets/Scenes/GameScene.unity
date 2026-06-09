@@ -1760,7 +1760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83422e45827bfde4a8706a67cecf099e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CountdownUI
-  countdownText: {fileID: 0}
+  countdownText: {fileID: 601918200}
 --- !u!114 &1492911824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1773,10 +1773,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f9b9e67783c744b91169baca11601b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
-  scoreText: {fileID: 0}
-  turnText: {fileID: 0}
-  resultText: {fileID: 0}
-  resultPanel: {fileID: 0}
+  scoreText: {fileID: 884280926}
+  turnText: {fileID: 410956607}
+  resultText: {fileID: 1229785167}
+  resultPanel: {fileID: 2098309660}
 --- !u!114 &1492911825
 MonoBehaviour:
   m_ObjectHideFlags: 0
