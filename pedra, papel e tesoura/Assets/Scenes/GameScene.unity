@@ -1801,6 +1801,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2365f6f53ae36429a9c1a6ce856a38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimationController
+  player1Animator: {fileID: 0}
+  player2Animator: {fileID: 0}
 --- !u!1 &1511791467
 GameObject:
   m_ObjectHideFlags: 0

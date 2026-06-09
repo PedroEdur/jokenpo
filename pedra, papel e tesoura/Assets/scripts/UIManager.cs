@@ -25,13 +25,13 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // Atualiza o placar
+    // ===== PLACAR =====
+
     public void UpdateScore()
     {
         scoreText.text = player1Score + " x " + player2Score;
     }
 
-    // Caso o pessoal da lógica queira atualizar o placar
     public void UpdateScore(int p1, int p2)
     {
         player1Score = p1;
@@ -40,26 +40,27 @@ public class UIManager : MonoBehaviour
         UpdateScore();
     }
 
-    // Atualiza o texto do turno
+    // ===== TURNO =====
+
     public void SetTurnText(string text)
     {
         turnText.text = text;
     }
 
-    // Mostra o resultado
+    // ===== RESULTADO =====
+
     public void ShowResult(string result)
     {
         resultPanel.SetActive(true);
         resultText.text = result;
     }
 
-    // Esconde o painel de resultado
     public void HideResult()
     {
         resultPanel.SetActive(false);
     }
 
-    // ===== BOTÕES (TESTE DA INTERFACE) =====
+    // ===== BOTÕES =====
 
     public void OnRockButton()
     {
@@ -77,5 +78,22 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Tesoura escolhida");
         SetTurnText("Tesoura selecionada");
+    }
+
+    // ===== RESULTADOS =====
+
+    public void TestVictory()
+    {
+        ShowResult("Vitória!");
+    }
+
+    public void TestDefeat()
+    {
+        ShowResult("Derrota!");
+    }
+
+    public void TestDraw()
+    {
+        ShowResult("Empate!");
     }
 }
