@@ -1801,8 +1801,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2365f6f53ae36429a9c1a6ce856a38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimationController
-  player1Animator: {fileID: 0}
-  player2Animator: {fileID: 0}
+  player1Image: {fileID: 1511791469}
+  player2Image: {fileID: 1556363652}
+  pedra: {fileID: -1043984691902091214, guid: 463747813e9b1524984c5927aa66ac4a, type: 3}
+  papel: {fileID: -1171837966712995514, guid: 548a733b9ef5c954091089f43d6aa03c, type: 3}
+  tesoura: {fileID: 6021669508070654204, guid: b1d3c3825599a0242a2a28d78511df9e, type: 3}
 --- !u!1 &1511791467
 GameObject:
   m_ObjectHideFlags: 0

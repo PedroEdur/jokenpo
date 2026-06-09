@@ -1,21 +1,46 @@
-using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AnimationController : MonoBehaviour
 {
-    public Animator player1Animator;
-    public Animator player2Animator;
+    [Header("Imagens dos jogadores")]
+    public Image player1Image;
+    public Image player2Image;
 
-    public IEnumerator PlayRevealAnimation()
+    [Header("Sprites")]
+    public Sprite pedra;
+    public Sprite papel;
+    public Sprite tesoura;
+
+    public void MostrarEscolhas(string escolhaP1, string escolhaP2)
     {
-        player1Animator.SetTrigger("Reveal");
-        player2Animator.SetTrigger("Reveal");
+        player1Image.sprite = ObterSprite(escolhaP1);
+        player2Image.sprite = ObterSprite(escolhaP2);
 
-        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Escolhas reveladas!");
     }
 
-    public void TestAnimation()
+    private Sprite ObterSprite(string escolha)
     {
-        StartCoroutine(PlayRevealAnimation());
+        switch (escolha)
+        {
+            case "Pedra":
+                return pedra;
+
+            case "Papel":
+                return papel;
+
+            case "Tesoura":
+                return tesoura;
+
+            default:
+                return null;
+        }
+    }
+
+    // Apenas para testar
+    public void TestarRevelacao()
+    {
+        MostrarEscolhas("Pedra", "Tesoura");
     }
 }
