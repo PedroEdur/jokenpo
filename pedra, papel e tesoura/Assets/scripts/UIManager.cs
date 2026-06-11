@@ -1,18 +1,29 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("Jogo")]
+    public GameManager gameManager;
+
     [Header("Textos")]
     public TMP_Text scoreText;
     public TMP_Text turnText;
     public TMP_Text resultText;
 
-    [Header("Painéis")]
+    [Header("PainÃ©is")]
     public GameObject resultPanel;
 
     private int player1Score = 0;
     private int player2Score = 0;
+
+    private void Awake()
+    {
+        if (gameManager == null)
+        {
+            gameManager = FindObjectOfType<GameManager>();
+        }
+    }
 
     private void Start()
     {
@@ -29,7 +40,10 @@ public class UIManager : MonoBehaviour
 
     public void UpdateScore()
     {
-        scoreText.text = player1Score + " x " + player2Score;
+        if (scoreText != null)
+        {
+            scoreText.text = player1Score + " x " + player2Score;
+        }
     }
 
     public void UpdateScore(int p1, int p2)
@@ -44,47 +58,79 @@ public class UIManager : MonoBehaviour
 
     public void SetTurnText(string text)
     {
-        turnText.text = text;
+        if (turnText != null)
+        {
+            turnText.text = text;
+        }
     }
 
     // ===== RESULTADO =====
 
     public void ShowResult(string result)
     {
-        resultPanel.SetActive(true);
-        resultText.text = result;
+        if (resultPanel != null)
+        {
+            resultPanel.SetActive(true);
+        }
+
+        if (resultText != null)
+        {
+            resultText.text = result;
+        }
     }
 
     public void HideResult()
     {
-        resultPanel.SetActive(false);
+        if (resultPanel != null)
+        {
+            resultPanel.SetActive(false);
+        }
     }
 
-    // ===== BOTÕES =====
+    // ===== BOTÃ•ES =====
 
     public void OnRockButton()
     {
         Debug.Log("Pedra escolhida");
-        SetTurnText("Pedra selecionada");
+        EnviarEscolha(GameManager.escolhadojogador.Pedra);
     }
 
     public void OnPaperButton()
     {
-        Debug.Log("Papel escolhida");
-        SetTurnText("Papel selecionado");
+        Debug.Log("Papel escolhido");
+        EnviarEscolha(GameManager.escolhadojogador.Papel);
     }
 
     public void OnScissorsButton()
     {
         Debug.Log("Tesoura escolhida");
-        SetTurnText("Tesoura selecionada");
+        EnviarEscolha(GameManager.escolhadojogador.Tesoura);
+    }
+
+    public void OnNextRoundButton()
+    {
+        if (gameManager != null)
+        {
+            gameManager.ProximoRound();
+        }
+    }
+
+    private void EnviarEscolha(GameManager.escolhadojogador escolha)
+    {
+        if (gameManager == null)
+        {
+            Debug.LogWarning("UIManager precisa de uma referÃªncia para o GameManager.");
+            return;
+        }
+
+        gameManager.Escolher(escolha);
     }
 
     // ===== RESULTADOS =====
 
     public void TestVictory()
     {
-        ShowResult("Vitória!");
+        ShowResult("VitÃ³ria!");
     }
 
     public void TestDefeat()
@@ -97,3 +143,4 @@ public class UIManager : MonoBehaviour
         ShowResult("Empate!");
     }
 }
+
