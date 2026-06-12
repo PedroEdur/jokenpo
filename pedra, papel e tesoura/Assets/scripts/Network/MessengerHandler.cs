@@ -64,8 +64,39 @@ namespace Network
             SendMessage(MessageType.Disconnect, string.Empty);
         }
 
+        public void SetLocalPlayerId(string playerId)
+        {
+            localPlayerId = playerId;
+        }
+
+        public void SetNetworkManager(NetworkManager manager)
+        {
+            if (networkManager == manager)
+            {
+                return;
+            }
+
+            if (isActiveAndEnabled && networkManager != null)
+            {
+                networkManager.OnMessageReceived -= HandleRawMessage;
+            }
+
+            networkManager = manager;
+
+            if (isActiveAndEnabled && networkManager != null)
+            {
+                networkManager.OnMessageReceived += HandleRawMessage;
+            }
+        }
+
         private void SendMessage(MessageType type, string payload)
         {
+            if (networkManager == null)
+            {
+                Debug.LogWarning("MessengerHandler precisa de uma referencia para NetworkManager.");
+                return;
+            }
+
             NetworkMessage message = new NetworkMessage(type, localPlayerId, payload);
             string json = JsonUtility.ToJson(message);
 
