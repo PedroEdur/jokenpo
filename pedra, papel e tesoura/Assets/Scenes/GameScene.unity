@@ -1807,9 +1807,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationController
   player1Image: {fileID: 1511791469}
   player2Image: {fileID: 1556363652}
-  pedra: {fileID: 5443838805995997219, guid: c64428737b538e141826e1b19e61e6bb, type: 3}
-  papel: {fileID: -5107383624665178370, guid: c64428737b538e141826e1b19e61e6bb, type: 3}
-  tesoura: {fileID: 1239581427176787058, guid: c64428737b538e141826e1b19e61e6bb, type: 3}
+  pedra: {fileID: 5653742466506191600, guid: 03086564ce70df54f9729339fb4700c6, type: 3}
+  papel: {fileID: 4595915346323821514, guid: 49aa98d7381fd0542b5b25d644d62872, type: 3}
+  tesoura: {fileID: -3865166367039209339, guid: 21db58e4d8ddd94439f39465cfb2a6f1, type: 3}
 --- !u!114 &1492911826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2681,7 +2681,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2098309661
 RectTransform:
   m_ObjectHideFlags: 0
