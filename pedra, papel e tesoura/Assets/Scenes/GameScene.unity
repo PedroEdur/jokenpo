@@ -290,7 +290,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 314.69067, y: 138.21796}
+  m_AnchoredPosition: {x: 370, y: 131.78}
   m_SizeDelta: {x: 193.3814, y: 42.4359}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &168861622
@@ -616,18 +616,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1492911824}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnRockButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1492911828}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: EscolherPedra
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1062,7 +1050,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 28, y: 14}
+  m_AnchoredPosition: {x: 17, y: 13}
   m_SizeDelta: {x: 104.597, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &601918200
@@ -1151,7 +1139,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -14.902191, z: -0.27209473, w: -15.587799}
+  m_margin: {x: 0, y: 1.1842346, z: -0.27209473, w: -1.646225}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1819,9 +1807,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationController
   player1Image: {fileID: 1511791469}
   player2Image: {fileID: 1556363652}
-  pedra: {fileID: 5443838805995997219, guid: c64428737b538e141826e1b19e61e6bb, type: 3}
-  papel: {fileID: -5107383624665178370, guid: c64428737b538e141826e1b19e61e6bb, type: 3}
-  tesoura: {fileID: 1239581427176787058, guid: c64428737b538e141826e1b19e61e6bb, type: 3}
+  pedra: {fileID: 5653742466506191600, guid: 03086564ce70df54f9729339fb4700c6, type: 3}
+  papel: {fileID: 4595915346323821514, guid: 49aa98d7381fd0542b5b25d644d62872, type: 3}
+  tesoura: {fileID: -3865166367039209339, guid: 21db58e4d8ddd94439f39465cfb2a6f1, type: 3}
 --- !u!114 &1492911826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2147,18 +2135,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1492911824}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnScissorsButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1492911828}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: EscolherTesoura
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2504,18 +2480,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1492911824}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnPaperButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1492911828}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: EscolherPapel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
