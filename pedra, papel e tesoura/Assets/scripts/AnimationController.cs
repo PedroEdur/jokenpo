@@ -38,9 +38,6 @@ public class AnimationController : MonoBehaviour
         }
     }
 
-    // Apenas para testar
-    public void TestarRevelacao()
-    {
-        MostrarEscolhas("Pedra", "Tesoura");
-    }
+   
+
 }
