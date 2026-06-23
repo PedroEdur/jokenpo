@@ -3,39 +3,44 @@ using UnityEngine.UI;
 
 public class AnimationController : MonoBehaviour
 {
-    [Header("Imagens dos jogadores")]
-    public Image player1Image;
-    public Image player2Image;
+    public Image player1Reveal;
+    public Image player2Reveal;
 
-    [Header("Sprites")]
     public Sprite pedra;
     public Sprite papel;
     public Sprite tesoura;
 
-    public void MostrarEscolhas(string escolhaP1, string escolhaP2)
+    public void MostrarEscolhas(GameManager.escolhadojogador p1,
+                                GameManager.escolhadojogador p2)
     {
-        player1Image.sprite = ObterSprite(escolhaP1);
-        player2Image.sprite = ObterSprite(escolhaP2);
+        player1Reveal.enabled = true;
+        player2Reveal.enabled = true;
 
-        Debug.Log("Escolhas reveladas!");
+        player1Reveal.sprite = ObterSprite(p1);
+        player2Reveal.sprite = ObterSprite(p2);
     }
 
-    private Sprite ObterSprite(string escolha)
+    public void EsconderEscolhas()
+    {
+        player1Reveal.enabled = false;
+        player2Reveal.enabled = false;
+    }
+
+    private Sprite ObterSprite(GameManager.escolhadojogador escolha)
     {
         switch (escolha)
         {
-            case "Pedra":
+            case GameManager.escolhadojogador.Pedra:
                 return pedra;
 
-            case "Papel":
+            case GameManager.escolhadojogador.Papel:
                 return papel;
 
-            case "Tesoura":
+            case GameManager.escolhadojogador.Tesoura:
                 return tesoura;
 
             default:
                 return null;
         }
     }
-
 }

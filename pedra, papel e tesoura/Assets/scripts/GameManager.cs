@@ -294,7 +294,7 @@ public class GameManager : MonoBehaviour
 
         if (animationController != null)
         {
-            animationController.MostrarEscolhas(escolhaJogador1.ToString(), escolhaJogador2.ToString());
+            animationController.MostrarEscolhas(escolhaJogador1, escolhaJogador2);
         }
 
         if (checarResultado == null)
