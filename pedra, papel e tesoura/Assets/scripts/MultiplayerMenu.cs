@@ -9,13 +9,22 @@ public class MultiplayerMenu : MonoBehaviour
 
     public void CriarPartida()
     {
-        statusText.text = "Status: Criando partida...";
+        statusText.text = "Status: Criando servidor...";
+
+       MultiplayerConfig.NetworkEnabled = true;
+        MultiplayerConfig.IsHost = true;
+
         SceneManager.LoadScene("GameScene");
     }
 
-    public void EntrarPartida()
+    public void Entrar()
     {
-        statusText.text = "Status: Entrando...";
+        statusText.text = "Status: Conectando...";
+
+        MultiplayerConfig.NetworkEnabled = true;
+        MultiplayerConfig.IsHost = false;
+       MultiplayerConfig.ServerIP = ipInput.text;
+
         SceneManager.LoadScene("GameScene");
     }
 

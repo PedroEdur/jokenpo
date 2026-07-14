@@ -87,23 +87,25 @@ public class GameManager : MonoBehaviour
 
     private void ConfigurarRede()
     {
-        usarRede = usarRede || NetworkSessionConfig.NetworkEnabled;
+        usarRede = usarRede || MultiplayerConfig.NetworkEnabled;
 
         if (!usarRede)
         {
             return;
         }
 
-        jogadorLocalEhJogador1 = NetworkSessionConfig.IsHost;
+        jogadorLocalEhJogador1 = MultiplayerConfig.IsHost;
 
         if (networkManager == null)
         {
-            networkManager = gameObject.AddComponent<NetworkManager>();
+            Debug.LogError("NetworkManager não encontrado na cena!");
+            return;
         }
 
         if (messengerHandler == null)
         {
-            messengerHandler = gameObject.AddComponent<MessengerHandler>();
+            Debug.LogError("MessengerHandler não encontrado na cena!");
+            return;
         }
 
         messengerHandler.SetNetworkManager(networkManager);
@@ -116,7 +118,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            networkManager.ConnectToServer();
+            networkManager.ConnectToServer(MultiplayerConfig.ServerIP);
         }
     }
 
@@ -213,7 +215,15 @@ public class GameManager : MonoBehaviour
 
     private void EscolherEmRede(escolhadojogador escolha)
     {
+
+        {
+            Debug.Log("Entrou no EscolherEmRede");
+        }
+        
+        
         if (processandoRound || EstadoAtual == GameState.Revelacao || EstadoAtual == GameState.Resultado || EstadoAtual == GameState.Fim)
+            
+            
         {
             return;
         }
@@ -237,6 +247,7 @@ public class GameManager : MonoBehaviour
         if (messengerHandler != null)
         {
             messengerHandler.SendChoice(escolha.ToString());
+            Debug.Log("Escolha enviada: " + escolha);
         }
 
         AtualizarInterface();
