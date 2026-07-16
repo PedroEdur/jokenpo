@@ -1,108 +1,167 @@
 using System;
+using System.Collections.Concurrent;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using UnityEngine;
 
-public class NetworkManager : MonoBehaviour
+namespace Network
 {
-    TcpListener server;
-    TcpClient client;
-    NetworkStream stream;
-
-    Thread receiveThread;
-
-    public bool Connected => client != null && client.Connected;
-
-    public Action<string> OnMessageReceived;
-
-    const int PORT = 7777;
-
-    public void StartServer()
+    public class NetworkManager : MonoBehaviour
     {
-        try
+        public event Action<string> OnMessageReceived;
+        public event Action OnConnected;
+        public event Action OnDisconnected;
+
+        [SerializeField] private string host = "127.0.0.1";
+        [SerializeField] private int port = 7777;
+
+        private TcpListener server;
+        private TcpClient client;
+        private StreamReader reader;
+        private StreamWriter writer;
+        private Thread receiveThread;
+        private readonly ConcurrentQueue<string> receivedMessages = new ConcurrentQueue<string>();
+        private bool isRunning;
+
+        private void Update()
         {
-            server = new TcpListener(IPAddress.Any, PORT);
-            server.Start();
-
-            Debug.Log("Servidor iniciado.");
-
-            server.BeginAcceptTcpClient(OnClientConnected, null);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError(e.Message);
-        }
-    }
-
-    void OnClientConnected(IAsyncResult result)
-    {
-        client = server.EndAcceptTcpClient(result);
-        stream = client.GetStream();
-
-        Debug.Log("Cliente conectado!");
-
-        receiveThread = new Thread(ReceiveLoop);
-        receiveThread.Start();
-    }
-
-    public void ConnectToServer(string ip)
-    {
-        try
-        {
-            client = new TcpClient();
-
-            client.Connect(ip, PORT);
-
-            stream = client.GetStream();
-
-            Debug.Log("Conectado ao servidor!");
-
-            receiveThread = new Thread(ReceiveLoop);
-            receiveThread.Start();
-        }
-        catch (Exception e)
-        {
-            Debug.LogError(e.Message);
-        }
-    }
-
-    void ReceiveLoop()
-    {
-        byte[] buffer = new byte[1024];
-
-        while (client != null && client.Connected)
-        {
-            int length = stream.Read(buffer, 0, buffer.Length);
-
-            if (length > 0)
+            while (receivedMessages.TryDequeue(out string message))
             {
-                string msg = Encoding.UTF8.GetString(buffer, 0, length);
-
-                OnMessageReceived?.Invoke(msg);
+                OnMessageReceived?.Invoke(message);
             }
         }
-    }
 
-    public void Send(string message)
-    {
-        if (!Connected)
-            return;
+        private void OnApplicationQuit()
+        {
+            Disconnect();
+        }
 
-        byte[] data = Encoding.UTF8.GetBytes(message);
+        public void StartServer()
+        {
+            if (isRunning)
+            {
+                return;
+            }
 
-        stream.Write(data, 0, data.Length);
-    }
+            server = new TcpListener(IPAddress.Any, port);
+            server.Start();
+            isRunning = true;
 
-    private void OnApplicationQuit()
-    {
-        receiveThread?.Abort();
+            Thread acceptThread = new Thread(AcceptClient);
+            acceptThread.IsBackground = true;
+            acceptThread.Start();
 
-        stream?.Close();
+            Debug.Log($"Server started on port {port}");
+        }
 
-        client?.Close();
+        public void ConnectToServer()
+        {
+            if (isRunning)
+            {
+                return;
+            }
 
-        server?.Stop();
+            try
+            {
+                client = new TcpClient(host, port);
+                PrepareStreams();
+                StartReceiveThread();
+                OnConnected?.Invoke();
+            }
+            catch (SocketException exception)
+            {
+                Debug.LogError($"Connection failed: {exception.Message}");
+            }
+        }
+
+        public void Send(string message)
+        {
+            if (writer == null)
+            {
+                Debug.LogWarning("Cannot send message because there is no active TCP connection.");
+                return;
+            }
+
+            writer.WriteLine(message);
+            writer.Flush();
+        }
+
+        public void Disconnect()
+        {
+            isRunning = false;
+
+            reader?.Close();
+            writer?.Close();
+            client?.Close();
+            server?.Stop();
+
+            reader = null;
+            writer = null;
+            client = null;
+            server = null;
+
+            OnDisconnected?.Invoke();
+        }
+
+        private void AcceptClient()
+        {
+            try
+            {
+                client = server.AcceptTcpClient();
+                PrepareStreams();
+                StartReceiveThread();
+                OnConnected?.Invoke();
+            }
+            catch (SocketException exception)
+            {
+                if (isRunning)
+                {
+                    Debug.LogError($"Accept client failed: {exception.Message}");
+                }
+            }
+        }
+
+        private void PrepareStreams()
+        {
+            NetworkStream stream = client.GetStream();
+            reader = new StreamReader(stream);
+            writer = new StreamWriter(stream);
+            isRunning = true;
+        }
+
+        private void StartReceiveThread()
+        {
+            receiveThread = new Thread(ReceiveLoop);
+            receiveThread.IsBackground = true;
+            receiveThread.Start();
+        }
+
+        private void ReceiveLoop()
+        {
+            while (isRunning && client != null && client.Connected)
+            {
+                try
+                {
+                    string message = reader.ReadLine();
+
+                    if (string.IsNullOrEmpty(message))
+                    {
+                        continue;
+                    }
+
+                    receivedMessages.Enqueue(message);
+                }
+                catch (IOException)
+                {
+                    Disconnect();
+                }
+                catch (ObjectDisposedException)
+                {
+                    Disconnect();
+                }
+            }
+        }
     }
 }
