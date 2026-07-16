@@ -1938,7 +1938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f9b9e67783c744b91169baca11601b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 1492911828}
   scoreText: {fileID: 884280926}
   turnText: {fileID: 410956607}
   resultText: {fileID: 1229785167}
@@ -1955,8 +1955,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2365f6f53ae36429a9c1a6ce856a38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimationController
-  player1Reveal: {fileID: 0}
-  player2Reveal: {fileID: 0}
+  player1Reveal: {fileID: 1421136471}
+  player2Reveal: {fileID: 923938745}
   pedra: {fileID: 332134695981098997, guid: c64428737b538e141826e1b19e61e6bb, type: 3}
   papel: {fileID: -8012430507051170089, guid: c64428737b538e141826e1b19e61e6bb, type: 3}
   tesoura: {fileID: 3873486481132660277, guid: c64428737b538e141826e1b19e61e6bb, type: 3}
@@ -2833,7 +2833,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2098309661
 RectTransform:
   m_ObjectHideFlags: 0

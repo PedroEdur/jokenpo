@@ -1,4 +1,4 @@
-public static class NetworkSessionConfig
+public static class NTsession
 {
     public static bool NetworkEnabled = false;
 
