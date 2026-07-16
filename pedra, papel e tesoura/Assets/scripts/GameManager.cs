@@ -76,18 +76,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (MultiplayerConfig.MultiplayerEnabled)
-    {
-        if (MultiplayerConfig.IsHost)
-        {
-            Debug.Log("Sou o HOST");
-        }
-        else
-        {
-            Debug.Log("Sou o CLIENTE");
-        }
-    }
-
         ConfigurarRede();
         MudarEstado(EstadoInicialDoRound());
     }
@@ -474,3 +462,4 @@ public class GameManager : MonoBehaviour
         return GameState.EsperandoJogador1;
     }
 }
+

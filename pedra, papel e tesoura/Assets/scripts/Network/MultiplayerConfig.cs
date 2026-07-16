@@ -1,5 +1,3 @@
-using System;
-
 public static class MultiplayerConfig
 {
     public static bool NetworkEnabled = false;
