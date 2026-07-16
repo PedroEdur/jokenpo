@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Concurrent;
 using System.IO;
@@ -40,6 +41,7 @@ namespace Network
 
         public void StartServer()
         {
+            Debug.Log($"Servidor iniciado em {GetLocalIPAddress()}:{port}");
             if (isRunning)
             {
                 return;
@@ -54,8 +56,20 @@ namespace Network
             acceptThread.Start();
 
             Debug.Log($"Server started on port {port}");
-        }
 
+            
+        }
+        private string GetLocalIPAddress()
+            {
+                foreach (IPAddress ip in Dns.GetHostAddresses(Dns.GetHostName()))
+                {
+                    if (ip.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        return ip.ToString();
+                    }
+                }
+                return "127.0.0.1";
+            }
         public void ConnectToServer()
         {
             if (isRunning)
@@ -65,10 +79,15 @@ namespace Network
 
             try
             {
-                client = new TcpClient(host, port);
+                host = NTsession.ServerIP;
+                Debug.Log($"Tentando conectar em {host}:{port}");
+
+                client = new TcpClient();
+                client.Connect(host, port);
                 PrepareStreams();
                 StartReceiveThread();
                 OnConnected?.Invoke();
+                Debug.Log("Cliente conectado.");
             }
             catch (SocketException exception)
             {
@@ -84,8 +103,14 @@ namespace Network
                 return;
             }
 
-            writer.WriteLine(message);
-            writer.Flush();
+            try
+            {
+                writer.WriteLine(message);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Erro ao enviar mensagem: {e.Message}");
+            }
         }
 
         public void Disconnect()
@@ -109,7 +134,11 @@ namespace Network
         {
             try
             {
+               Debug.Log("Aguardando cliente...");
+
                 client = server.AcceptTcpClient();
+
+                Debug.Log("Cliente conectado!");
                 PrepareStreams();
                 StartReceiveThread();
                 OnConnected?.Invoke();
@@ -126,8 +155,13 @@ namespace Network
         private void PrepareStreams()
         {
             NetworkStream stream = client.GetStream();
+
             reader = new StreamReader(stream);
-            writer = new StreamWriter(stream);
+
+            writer = new StreamWriter(stream)
+            {
+                AutoFlush = true
+            };
             isRunning = true;
         }
 
@@ -146,12 +180,14 @@ namespace Network
                 {
                     string message = reader.ReadLine();
 
-                    if (string.IsNullOrEmpty(message))
-                    {
-                        continue;
-                    }
+                if (message == null)
+                {
+                    Debug.Log("Conexão encerrada.");
+                    Disconnect();
+                    break;
+                }
 
-                    receivedMessages.Enqueue(message);
+                receivedMessages.Enqueue(message);
                 }
                 catch (IOException)
                 {

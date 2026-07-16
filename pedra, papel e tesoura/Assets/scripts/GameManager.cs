@@ -9,8 +9,7 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
     public AnimationController animationController;
     public CountdownUI countdownUI;
-
-    [Header("Rede")]
+        //rede
     public bool usarRede;
     public bool jogadorLocalEhJogador1 = true;
     public NetworkManager networkManager;
@@ -87,14 +86,18 @@ public class GameManager : MonoBehaviour
 
     private void ConfigurarRede()
     {
-        usarRede = usarRede || NetworkSessionConfig.NetworkEnabled;
+        Debug.Log($"Usar rede: {NTsession.NetworkEnabled}");
+        Debug.Log($"É Host: {NTsession.IsHost}");
+        Debug.Log($"IP do Servidor: {NTsession.ServerIP}");
+
+        usarRede = usarRede || NTsession.NetworkEnabled;
 
         if (!usarRede)
         {
             return;
         }
 
-        jogadorLocalEhJogador1 = NetworkSessionConfig.IsHost;
+        jogadorLocalEhJogador1 = NTsession.IsHost;
 
         if (networkManager == null)
         {
